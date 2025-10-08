@@ -1,6 +1,5 @@
 package com.example.dreamybloomapp.screens
 
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -55,7 +54,7 @@ fun LoginScreen(navController: NavController) {
             Text(
                 text = "Login",
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary // Text color set by the button's contentColor
             )
         }
 
@@ -64,14 +63,16 @@ fun LoginScreen(navController: NavController) {
         OutlinedButton(
             onClick = { navController.navigate(ScreenRoutes.Register.route) },
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.primary),
+
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp)
         ) {
             Text(
                 text = "Register",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.primary
+                style = MaterialTheme.typography.titleMedium
+                // Removed redundant color = MaterialTheme.colorScheme.primary
             )
         }
     }
