@@ -11,7 +11,6 @@ import com.example.dreamybloomapp.navigation.MainAppShell
 
 @Composable
 fun AppNavigation() {
-    // 1. Initialize the NavController, which manages the navigation stack
     val navController = rememberNavController()
 
     NavHost(
