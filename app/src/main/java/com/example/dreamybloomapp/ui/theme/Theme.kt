@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// Define the Light Color Scheme using the colors from Color.kt
+// Define the Light Color Scheme using the standard Light colors
 private val LightColorScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
@@ -41,9 +41,10 @@ private val LightColorScheme = lightColorScheme(
     inverseSurface = inverseSurfaceLight,
     inverseOnSurface = inverseOnSurfaceLight,
     inversePrimary = inversePrimaryLight,
+
 )
 
-// Define the Dark Color Scheme using the colors from Color.kt
+// Define the Dark Color Scheme using the standard Dark colors
 private val DarkColorScheme = darkColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
@@ -73,7 +74,7 @@ private val DarkColorScheme = darkColorScheme(
     inverseSurface = inverseSurfaceDark,
     inverseOnSurface = inverseOnSurfaceDark,
     inversePrimary = inversePrimaryDark,
-)
+    )
 
 /**
  * The main theme composable for the DreamyBloomApp.
@@ -81,8 +82,8 @@ private val DarkColorScheme = darkColorScheme(
  */
 @Composable
 fun DreamyBloomAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is not included by default for custom themes, keeping it simple.
+    darkTheme: Boolean = isSystemInDarkTheme(), // This handles the device setting
+    // Dynamic color is not included by default for custom themes.
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -90,20 +91,20 @@ fun DreamyBloomAppTheme(
         else -> LightColorScheme
     }
 
+    // This block handles setting the system status bar color to match the app's surface color
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            // Set status bar color to match the primary surface color
             window.statusBarColor = colorScheme.surface.toArgb()
-            // Ensure status bar icons are visible in both light/dark modes
+            // Set status bar icons to be light or dark based on the surface background color
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography, // Assume default or custom Typography is defined
+        typography = Typography, // Assumes Typography is defined in Type.kt
         content = content
     )
 }
