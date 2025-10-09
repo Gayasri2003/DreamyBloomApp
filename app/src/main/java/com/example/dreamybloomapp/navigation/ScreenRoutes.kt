@@ -12,4 +12,8 @@ sealed class ScreenRoutes(val route: String) {
     object Cart : ScreenRoutes("cart_screen")
     object Profile : ScreenRoutes("profile_screen")
 
-    }
+    // Master/Detail Route must be defined like this:
+    object ProductDetail : ScreenRoutes("product_detail/{productId}")
+
+
+}

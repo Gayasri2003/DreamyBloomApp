@@ -51,6 +51,7 @@ fun ProfileScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .safeDrawingPadding()
             .padding(horizontal = 16.dp)
             .padding(bottom = 60.dp),
         horizontalAlignment = Alignment.CenterHorizontally

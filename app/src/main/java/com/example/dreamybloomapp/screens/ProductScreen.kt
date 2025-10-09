@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,13 +29,12 @@ import androidx.navigation.NavController
 import com.example.dreamybloomapp.R
 import com.example.dreamybloomapp.navigation.ScreenRoutes
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.example.dreamybloomapp.Product // Import Product data model
 import com.example.dreamybloomapp.productData
+import com.example.dreamybloomapp.ui.theme.DreamyBloomAppTheme
 
-// --- Data Models (Assume Product is imported from DataModels.kt) ---
-// Note: productData needs to be available either through DataModels.kt or defined here.
-// Assuming it is defined in DataModels.kt as per previous instruction.
-// val productData = mapOf(...)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +45,7 @@ fun ProductScreen(navController: NavController) {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .safeDrawingPadding()
             .padding(horizontal = 16.dp)
             .padding(bottom = 60.dp) // Pushes content above the FIXED Bottom Navigation Bar
     ) {
@@ -120,7 +121,6 @@ fun ProductSectionHeader(title: String) {
     )
 }
 
-// --- Responsive Grid Component (Implements 2 distinct layouts) ---
 
 @Composable
 fun ProductResponsiveGrid(products: List<Product>, navController: NavController) {
@@ -162,88 +162,98 @@ fun ProductResponsiveGrid(products: List<Product>, navController: NavController)
 fun ProductGridCard(product: Product, navController: NavController, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .height(260.dp)
-            .clickable {
-                // FIX: Navigate to Cart page as a temporary Master/Detail interaction
-                navController.navigate(ScreenRoutes.Cart.route)
-            },
-        shape = RoundedCornerShape(12.dp),
+            .height(220.dp)
+            .padding(4.dp),
+        shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize().padding(12.dp),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.SpaceBetween
+        Card(
+            modifier = Modifier
+                .fillMaxSize()
+                .clickable {
+                    // MASTER / DETAIL IMPLEMENTATION
+                    navController.navigate(ScreenRoutes.ProductDetail.route.replace("{productId}", product.id.toString()))
+                }
+                .padding(8.dp),
+            shape = RoundedCornerShape(4.dp),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
         ) {
-            // Top Section (Image and Wishlist Icon)
-            Box(
+            Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(110.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surfaceContainer),
-                contentAlignment = Alignment.TopEnd
+                    .fillMaxSize()
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Image(
-                    painter = painterResource(id = product.imageRes),
-                    contentDescription = product.name,
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier.fillMaxSize().padding(8.dp)
-                )
-                IconButton(onClick = { /* Wishlist Action */ }, modifier = Modifier.size(28.dp)) {
-                    Icon(
-                        Icons.Filled.FavoriteBorder,
-                        contentDescription = "Wishlist",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
-
-            // Middle Section (Name and Price)
-            Column(modifier = Modifier.padding(top = 8.dp)) {
-                Text(
-                    text = product.name,
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-
-            // Bottom Section (Price and Add to Cart)
-            Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column {
-                    Text("LKR", style = MaterialTheme.typography.labelSmall)
-                    Text(
-                        product.price,
-                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 16.sp),
-                        fontWeight = FontWeight.ExtraBold,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                // Add to Cart Quantity Button
-                OutlinedTextField(
-                    value = "1",
-                    onValueChange = { /* Update Quantity */ },
-                    modifier = Modifier.width(40.dp).height(32.dp),
-                    textStyle = LocalTextStyle.current.copy(fontSize = 14.sp, textAlign = TextAlign.Center),
-                       )
-                Spacer(modifier = Modifier.width(4.dp))
-                Button(
-                    onClick = { /* Add to Cart Action */ },
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
-                    contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp),
-                    modifier = Modifier.height(32.dp)
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(110.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(MaterialTheme.colorScheme.surfaceContainerHigh),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text("Add to Cart", fontSize = 10.sp)
+                    Image(
+                        painter = painterResource(id = product.imageRes),
+                        contentDescription = product.name,
+                        modifier = Modifier.size(80.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    Text(
+                        text = product.name,
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                    Text(
+                        text = "LKR ${product.price}",
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.padding(top = 2.dp)
+                    )
+                }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(
+                        onClick = { /* Buy Now Action */ },
+                        shape = RoundedCornerShape(4.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                    ) {
+                        Text("Buy Now", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSecondary)
+                    }
+                    IconButton(
+                        onClick = { /* Add to cart action */ },
+                        modifier = Modifier.size(30.dp)
+                    ) {
+                        Icon(
+                            Icons.Filled.ShoppingCart,
+                            contentDescription = "Add to cart",
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProductScreenPreview() {
+    DreamyBloomAppTheme {
+        ProductScreen(navController = rememberNavController())
     }
 }

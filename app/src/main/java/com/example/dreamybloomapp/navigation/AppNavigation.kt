@@ -1,12 +1,12 @@
-
 package com.example.dreamybloomapp.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavType // Required for argument type
+import androidx.navigation.navArgument // Required for defining arguments
 import com.example.dreamybloomapp.screens.*
-import com.example.dreamybloomapp.navigation.MainAppShell
 
 
 @Composable
@@ -17,7 +17,7 @@ fun AppNavigation() {
         navController = navController,
         startDestination = ScreenRoutes.Splash.route
     ) {
-        // Initial Screens - Must pass navController so they can navigate away
+        // --- Initial Screens ---
         composable(ScreenRoutes.Splash.route) {
             SplashScreen(navController = navController)
         }
@@ -30,13 +30,27 @@ fun AppNavigation() {
             RegisterScreen(navController = navController)
         }
 
-        // Main App Shell - This is the destination after Login.
-        // It contains the fixed Bottom Navigation Bar and handles the 4 inner screens.
+        // --- Main App Shell (Hosts the bottom navigation) ---
         composable(ScreenRoutes.Home.route) {
             MainAppShell(rootNavController = navController)
         }
 
-        // NOTE: The individual Composables (HomeScreen, ProductScreen, etc.)
-        // are now called *inside* MainAppShell.kt, not here.
+        // --- MASTER/DETAIL: Define the Product Detail Route ---
+        composable(
+            // The route template expects an integer ID (e.g., "product_detail/12")
+            route = ScreenRoutes.ProductDetail.route,
+            arguments = listOf(
+                navArgument("productId") {
+                    type = NavType.IntType
+                    defaultValue = 0
+                }
+            )
+        ) { backStackEntry ->
+            // Instantiate the Detail Screen, extracting the ID from the arguments
+            ProductDetailScreen(
+                navController = navController,
+                productId = backStackEntry.arguments?.getInt("productId") ?: 0
+            )
+        }
     }
 }

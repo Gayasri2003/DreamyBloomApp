@@ -240,8 +240,8 @@ fun ProductCard(product: Product, navController: NavController, modifier: Modifi
             modifier = Modifier
                 .fillMaxSize()
                 .clickable {
-                    // MASTER / DETAIL IMPLEMENTATION: Placeholder navigation
-                    navController.navigate(ScreenRoutes.Product.route)
+                    // MASTER / DETAIL IMPLEMENTATION
+                    navController.navigate(ScreenRoutes.ProductDetail.route.replace("{productId}", product.id.toString()))
                 }
                 .padding(8.dp),
             shape = RoundedCornerShape(4.dp),
