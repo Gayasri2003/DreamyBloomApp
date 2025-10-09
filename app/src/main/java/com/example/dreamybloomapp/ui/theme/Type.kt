@@ -6,10 +6,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Define the default system font family (Roboto on Android)
+// Default system font family (Roboto on Android)
 private val AppFontFamily = FontFamily.Default
 
-// Set of Material typography styles to cover all components used in your app.
+
 val Typography = Typography(
 
     headlineMedium = TextStyle(
@@ -20,7 +20,7 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
 
-    // Large Section Headers (used for "New Arrivals", "Anti-Aging Solutions")
+    // Large Section Headers
     titleLarge = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.Bold,
@@ -29,7 +29,7 @@ val Typography = Typography(
         letterSpacing = 0.sp
     ),
 
-    // Medium Titles (used for button text, Card titles like "Shipping Address")
+    // Medium Titles
     titleMedium = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.SemiBold,
@@ -38,7 +38,7 @@ val Typography = Typography(
         letterSpacing = 0.15.sp
     ),
 
-    // Small Titles (used for Product Names, Item titles)
+    // Small Titles
     titleSmall = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.Bold,
@@ -47,7 +47,7 @@ val Typography = Typography(
         letterSpacing = 0.1.sp
     ),
 
-    // Default body text (used in paragraphs, product descriptions)
+    // Default body text
     bodyLarge = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.Normal,
@@ -56,7 +56,7 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     ),
 
-    // Small body text (used for small descriptions, addresses)
+    // Small body text (
     bodySmall = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.Normal,
@@ -65,7 +65,7 @@ val Typography = Typography(
         letterSpacing = 0.4.sp
     ),
 
-    // Labels/Captions (used for button labels, small links, quantities)
+    // Labels/Captions
     labelLarge = TextStyle(
         fontFamily = AppFontFamily,
         fontWeight = FontWeight.Medium,

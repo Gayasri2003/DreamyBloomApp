@@ -22,12 +22,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.dreamybloomapp.R
-import com.example.dreamybloomapp.Product // Import Product data class
+import com.example.dreamybloomapp.Product
 import com.example.dreamybloomapp.productData
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.example.dreamybloomapp.ui.theme.DreamyBloomAppTheme
+
+
+val FallbackProduct = Product(
+    id = 0,
+    name = "Product Not Found",
+    price = "0.00",
+    imageRes = R.drawable.product_img_placeholder,
+    category = "N/A",
+    description = "The requested product could not be found. Please return to the product listing."
+)
 
 fun getProductById(id: Int): Product? {
     return productData.values.flatten().find { it.id == id }
@@ -37,15 +48,15 @@ fun getProductById(id: Int): Product? {
 @Composable
 fun ProductDetailScreen(navController: NavController, productId: Int) {
     // Attempt to find the product
-    val product = getProductById(productId)
+    val product: Product = getProductById(productId) ?: FallbackProduct
 
     // If product is null, show an error message and exit
-    if (product == null) {
+    if (productId == 0) {
         Scaffold(
             topBar = { DetailTopBar(navController = navController, title = "Product Not Found") }
         ) { paddingValues ->
             Box(Modifier.fillMaxSize().padding(paddingValues), contentAlignment = Alignment.Center) {
-                Text("Error: Product with ID $productId not found.", color = MaterialTheme.colorScheme.error)
+                Text("Error: Product with ID 0 not found.", color = MaterialTheme.colorScheme.error)
             }
         }
         return
@@ -211,5 +222,15 @@ fun DetailBottomBar(product: Product) {
             Spacer(modifier = Modifier.width(8.dp))
             Text("Add to Cart")
         }
+    }
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true, name = "Product Detail View")
+@Composable
+private fun ProductDetailScreenPreview() {
+    // Provide a mock NavController and a hardcoded valid ID (e.g., 101)
+    // The ID 101 corresponds to "Acne Face Wash" in your productData map.
+    DreamyBloomAppTheme {
+        ProductDetailScreen(navController = rememberNavController(), productId = 101)
     }
 }

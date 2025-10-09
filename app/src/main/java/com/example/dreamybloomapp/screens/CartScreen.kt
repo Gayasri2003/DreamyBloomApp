@@ -93,8 +93,7 @@ fun CartScreen(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .safeDrawingPadding()
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 60.dp),
+            .padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
@@ -103,9 +102,9 @@ fun CartScreen(navController: NavController) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 46.dp, bottom = 16.dp), // Pushes content down
+                    .padding(top = 10.dp, bottom = 10.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start // Changed to Start for alignment
+                horizontalArrangement = Arrangement.Start
             ) {
                 // Back Arrow Navigation to Home Page
                 IconButton(onClick = { navController.navigate(ScreenRoutes.Home.route) }) {

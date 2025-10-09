@@ -39,7 +39,7 @@ val profileMenuItems = listOf(
     ProfileMenu("Edit Profile", Icons.Filled.Person, "edit_profile_route"),
     ProfileMenu("Shopping Address", Icons.Filled.LocationOn, "shipping_address_route"),
     ProfileMenu("Wishlist", Icons.Filled.Favorite, "wishlist_route"),
-    ProfileMenu("Order History", Icons.Filled.Receipt, ScreenRoutes.Home.route), // Reusing Home route for simplicity
+    ProfileMenu("Order History", Icons.Filled.Receipt, ScreenRoutes.Home.route),
     ProfileMenu("Notifications", Icons.Filled.Notifications, "notifications_route"),
     ProfileMenu("Cards", Icons.Filled.CreditCard, "cards_route"),
 )
@@ -52,8 +52,7 @@ fun ProfileScreen(navController: NavController) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .safeDrawingPadding()
-            .padding(horizontal = 16.dp)
-            .padding(bottom = 60.dp),
+            .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
@@ -86,7 +85,7 @@ fun ProfileTopBar(navController: NavController, title: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 46.dp, bottom = 16.dp),
+            .padding(top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {

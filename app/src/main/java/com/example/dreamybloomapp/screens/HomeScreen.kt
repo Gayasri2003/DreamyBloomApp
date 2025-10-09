@@ -19,11 +19,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.dreamybloomapp.R
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import com.example.dreamybloomapp.navigation.ScreenRoutes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
@@ -42,7 +45,6 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .safeDrawingPadding()
-                .padding(horizontal = 16.dp)
                 .background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(top = 16.dp, bottom = 60.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -90,8 +92,7 @@ fun HomeScreen(navController: NavController) {
             // 3. Middle Promotional Banner
             item {
                 MiddleBanner(
-                    text1 = "The latest beauty and\nskin care products at\nyour fingertips",
-                    text2 = "Revamp your\nbeauty routine!",
+                    text1 = "The latest beauty and\nskin care products at your fingertips",
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
             }
@@ -118,7 +119,7 @@ fun HomeScreen(navController: NavController) {
             // 5. Discover Products for Your Skin Type Section
             item {
                 Text(
-                    text = "Discover Products for\nYour Skin Type",
+                    text = "Discover Products for Your Skin Type",
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground,
@@ -175,7 +176,7 @@ fun HomeBanner(title: String, subtitle: String, imageRes: Int, navController: Na
                     text = title,
                     style = MaterialTheme.typography.headlineSmall.copy(fontSize = 20.sp),
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                    color = Color(0xFF834C75)
                 )
                 Button(
                     onClick = { navController.navigate(ScreenRoutes.Product.route)},
@@ -192,7 +193,7 @@ fun HomeBanner(title: String, subtitle: String, imageRes: Int, navController: Na
 
 @Composable
 fun ProductGridSection(title: String, products: List<Product>, navController: NavController) {
-    // Responsiveness Logic: Determine column count based on screen width
+
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
 
@@ -235,7 +236,7 @@ fun ProductGridSection(title: String, products: List<Product>, navController: Na
 fun ProductCard(product: Product, navController: NavController, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .height(220.dp)
+            .height(240.dp)
             .padding(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
@@ -262,24 +263,24 @@ fun ProductCard(product: Product, navController: NavController, modifier: Modifi
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(110.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(6.dp))
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(id = product.imageRes),
                         contentDescription = product.name,
-                        modifier = Modifier.size(80.dp),
+                        modifier = Modifier.size(90.dp),
                         contentScale = ContentScale.Crop
                     )
                 }
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
                         text = product.name,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
@@ -287,28 +288,30 @@ fun ProductCard(product: Product, navController: NavController, modifier: Modifi
                     )
                     Text(
                         text = "LKR ${product.price}",
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 2.dp)
                     )
                 }
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
+                    horizontalArrangement = Arrangement.Start,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
-                        onClick = { /* Buy Now Action */ },
-                        shape = RoundedCornerShape(4.dp),
-                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                        onClick = { navController.navigate(ScreenRoutes.Cart.route)},
+                        shape = RoundedCornerShape(6.dp),
+                        contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                        modifier = Modifier.height(32.dp)
                     ) {
-                        Text("Buy Now", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSecondary)
+                        Text("Buy Now", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
                     }
+                    Spacer(modifier = Modifier.width(16.dp))
                     IconButton(
-                        onClick = { /* Add to cart action */ },
-                        modifier = Modifier.size(30.dp)
+                        onClick = { navController.navigate(ScreenRoutes.Cart.route) },
+                        modifier = Modifier.size(36.dp)
                     ) {
                         Icon(
                             Icons.Filled.ShoppingCart,
@@ -317,56 +320,71 @@ fun ProductCard(product: Product, navController: NavController, modifier: Modifi
                             modifier = Modifier.size(24.dp)
                         )
                     }
+
                 }
             }
         }
     }
 }
 
+
 @Composable
-fun MiddleBanner(text1: String, text2: String, modifier: Modifier = Modifier) {
-    Row(
+fun MiddleBanner(text1: String, modifier: Modifier = Modifier) {
+    Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(120.dp)
-            .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.tertiaryContainer),
-        verticalAlignment = Alignment.CenterVertically
+            .height(150.dp)
+            .clip(RoundedCornerShape(8.dp)),
+
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer)
     ) {
-        Text(
-            text = text1,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onTertiaryContainer,
-            modifier = Modifier
-                .weight(1f)
-                .padding(start = 16.dp)
-        )
-        Text(
-            text = text2,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSecondary,
-            modifier = Modifier
-                .weight(1f)
-                .background(MaterialTheme.colorScheme.secondary)
-                .fillMaxHeight()
-                .wrapContentSize(Alignment.Center)
-        )
+        Box(modifier = Modifier.fillMaxSize()) {
+            // Background Image
+            Image(
+                painter = painterResource(id = R.drawable.product_img_placeholder),
+                contentDescription = "Promotional Banner Background",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.5f))
+            )
+
+            // text block
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 20.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Text Block
+                Text(
+                    text = "The latest beauty and\nskin care products at your fingertips",
+                    style = MaterialTheme.typography.titleMedium.copy(fontSize = 20.sp),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+            }
+        }
     }
 }
-
 @Composable
 fun OfferCard(offerText: String) {
     Card(
         modifier = Modifier
             .width(180.dp)
-            .height(80.dp),
-        shape = RoundedCornerShape(12.dp),
+            .height(120.dp),
+        shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
     ) {
         Row(
-            modifier = Modifier.fillMaxSize().padding(8.dp),
+            modifier = Modifier.fillMaxSize().padding(12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
 
@@ -374,21 +392,31 @@ fun OfferCard(offerText: String) {
                 painter = painterResource(id = R.drawable.product_img_placeholder),
                 contentDescription = null,
                 modifier = Modifier
-                    .size(60.dp)
-                    .clip(RoundedCornerShape(8.dp))
+                    .size(70.dp)
+                    .clip(RoundedCornerShape(6.dp))
                     .background(MaterialTheme.colorScheme.surface),
                 contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Column {
-                Text(offerText, fontWeight = FontWeight.Medium, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurface)
+            Spacer(modifier = Modifier.width(12.dp))
+            Column (modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center){
+                Text(offerText,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis)
+
+                Spacer(modifier = Modifier.height(6.dp))
+
                 Button(
                     onClick = { /* View Offer Action */ },
                     shape = RoundedCornerShape(4.dp),
-                    contentPadding = PaddingValues(horizontal = 6.dp, vertical = 2.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                    contentPadding = PaddingValues(horizontal = 10.dp, vertical = 4.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                    modifier = Modifier.height(30.dp)
                 ) {
-                    Text("Buy Now", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSecondary)
+                    Text(" View >", fontSize = 11.sp, color = MaterialTheme.colorScheme.onSecondary)
                 }
             }
         }
@@ -399,26 +427,39 @@ fun OfferCard(offerText: String) {
 fun SkinTypeCard(skinType: SkinType) {
     Card(
         modifier = Modifier
-            .width(100.dp)
+            .width(115.dp)
             .height(130.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize()
+            .padding(top = 8.dp, bottom = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
 
             Image(
                 painter = painterResource(id = skinType.imageRes),
                 contentDescription = skinType.name,
-                modifier = Modifier.size(60.dp).clip(RoundedCornerShape(8.dp))
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
             )
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(skinType.name, fontSize = 12.sp, fontWeight = FontWeight.Medium, color = MaterialTheme.colorScheme.onSurface)
-                Icon(Icons.Filled.ArrowForward, contentDescription = "Go", modifier = Modifier.size(12.dp), tint = MaterialTheme.colorScheme.onSurface)
+
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(horizontal = 8.dp)){
+                Text(skinType.name,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1)
+                Spacer(modifier = Modifier.width(4.dp))
+                Icon(Icons.Filled.ArrowForward,
+                    contentDescription = "Go",
+                    modifier = Modifier.size(12.dp),
+                    tint = MaterialTheme.colorScheme.onSurface)
             }
         }
     }

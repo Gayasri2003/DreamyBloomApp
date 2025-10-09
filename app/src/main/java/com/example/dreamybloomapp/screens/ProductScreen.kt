@@ -31,7 +31,7 @@ import com.example.dreamybloomapp.navigation.ScreenRoutes
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.dreamybloomapp.Product // Import Product data model
+import com.example.dreamybloomapp.Product
 import com.example.dreamybloomapp.productData
 import com.example.dreamybloomapp.ui.theme.DreamyBloomAppTheme
 
@@ -47,10 +47,10 @@ fun ProductScreen(navController: NavController) {
             .background(MaterialTheme.colorScheme.background)
             .safeDrawingPadding()
             .padding(horizontal = 16.dp)
-            .padding(bottom = 60.dp) // Pushes content above the FIXED Bottom Navigation Bar
+
     ) {
         item {
-            // Custom Top Bar Area (Search/Back)
+            // Top Bar (Search/Back)
             ProductTopBar(searchQuery = searchQuery, onSearchChange = { searchQuery = it }, navController = navController)
 
             // Sort Selector (Simplified)
@@ -64,11 +64,10 @@ fun ProductScreen(navController: NavController) {
             Divider(color = MaterialTheme.colorScheme.outlineVariant)
         }
 
-        // Product Grid Sections (5 sections required)
+        // Product Grid Sections
         productData.forEach { (title, products) ->
             item {
                 ProductSectionHeader(title)
-                // Passing the first 4 products for a responsive grid view
                 ProductResponsiveGrid(products = products.take(4), navController = navController)
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -86,7 +85,7 @@ fun ProductTopBar(searchQuery: String, onSearchChange: (String) -> Unit, navCont
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 8.dp),
+            .padding(top = 10.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Back Arrow Navigation to previous screen (Home)
@@ -156,13 +155,13 @@ fun ProductResponsiveGrid(products: List<Product>, navController: NavController)
     }
 }
 
-// --- Individual Product Card (Master Item) ---
+// --- Individual Product Card ---
 
 @Composable
 fun ProductGridCard(product: Product, navController: NavController, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
-            .height(220.dp)
+            .height(250.dp)
             .padding(4.dp),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerHigh)
@@ -189,32 +188,32 @@ fun ProductGridCard(product: Product, navController: NavController, modifier: Mo
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(110.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                        .clip(RoundedCornerShape(6.dp))
                         .background(MaterialTheme.colorScheme.surfaceContainerHigh),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(
                         painter = painterResource(id = product.imageRes),
                         contentDescription = product.name,
-                        modifier = Modifier.size(80.dp),
+                        modifier = Modifier.size(90.dp),
                         contentScale = ContentScale.Crop
                     )
                 }
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 4.dp),
                     horizontalAlignment = Alignment.Start
                 ) {
                     Text(
                         text = product.name,
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Medium,
                         color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        modifier = Modifier.padding(top = 4.dp)
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = "LKR ${product.price}",
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(top = 2.dp)
@@ -226,16 +225,17 @@ fun ProductGridCard(product: Product, navController: NavController, modifier: Mo
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Button(
-                        onClick = { /* Buy Now Action */ },
-                        shape = RoundedCornerShape(4.dp),
+                        onClick = { navController.navigate(ScreenRoutes.Cart.route)},
+                        shape = RoundedCornerShape(6.dp),
                         contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                        modifier = Modifier.height(32.dp)
                     ) {
-                        Text("Buy Now", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSecondary)
+                        Text("Buy Now", fontSize = 12.sp, color = MaterialTheme.colorScheme.onSecondary)
                     }
                     IconButton(
-                        onClick = { /* Add to cart action */ },
-                        modifier = Modifier.size(30.dp)
+                        onClick = { navController.navigate(ScreenRoutes.Cart.route) },
+                        modifier = Modifier.size(36.dp)
                     ) {
                         Icon(
                             Icons.Filled.ShoppingCart,
