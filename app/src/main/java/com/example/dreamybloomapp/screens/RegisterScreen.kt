@@ -12,9 +12,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.dreamybloomapp.navigation.ScreenRoutes
-import androidx.compose.ui.text.input.KeyboardType // Removing the KeyboardOptions import, but keeping this for clarity
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.dreamybloomapp.ui.theme.DreamyBloomAppTheme
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll // Needed for responsiveness
+import androidx.compose.ui.platform.LocalContext
 
-// Note: The @OptIn annotation is necessary because TopAppBar is an experimental API.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(navController: NavController) {
@@ -23,26 +28,38 @@ fun RegisterScreen(navController: NavController) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var agreedToTerms by remember { mutableStateOf(false) } // Checkbox
+    val scrollState = rememberScrollState()
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Create Account") },
                 navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back to Login")
+                    IconButton(
+                        // --- FIX 1: Navigate to Splash screen ---
+                        onClick = {
+                            navController.navigate(ScreenRoutes.Splash.route) {
+                                // Clear back stack to start new flow
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                                launchSingleTop = true
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back to Splash")
                     }
                 }
             )
         }
     ) { paddingValues ->
-        // Use a Column with padding to contain the form elements
         Column(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
-                .padding(horizontal = 32.dp),
+                .padding(horizontal = 32.dp)
+                .verticalScroll(scrollState), // Added scroll for responsiveness
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -63,12 +80,11 @@ fun RegisterScreen(navController: NavController) {
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
             )
 
-            // 2. Email Field (Standard Text Input - relying on a user to understand the format)
+            // 2. Email Field
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email Address") },
-                // Keyboard type now defaults to text
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
             )
 
@@ -78,7 +94,6 @@ fun RegisterScreen(navController: NavController) {
                 onValueChange = { password = it },
                 label = { Text("Password") },
                 visualTransformation = PasswordVisualTransformation(), // Masks input
-                // Keyboard type now defaults to text
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
             )
 
@@ -102,14 +117,25 @@ fun RegisterScreen(navController: NavController) {
             }
 
 
-            // Register Button (No action on submission required for assignment)
+            // Register Button
             Button(
-                onClick = { /* TODO: Navigate back to Login or main screen, if registration were successful */ },
+                // --- FIX 2: Navigate to Login screen after registration ---
+                onClick = { navController.navigate(ScreenRoutes.Login.route) },
                 enabled = agreedToTerms,
                 modifier = Modifier.fillMaxWidth().height(56.dp)
             ) {
                 Text("Register")
             }
         }
+    }
+}
+
+// Preview remains the same
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(showBackground = true)
+@Composable
+private fun RegisterScreenPreview() {
+    DreamyBloomAppTheme {
+        RegisterScreen(navController = rememberNavController())
     }
 }

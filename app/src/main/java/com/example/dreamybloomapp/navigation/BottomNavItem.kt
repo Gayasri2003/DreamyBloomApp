@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Person
 
 
-// Sealed class definition starts here
+// Sealed class definition
 sealed class BottomNavItem(
     val route: String,
     val label: String,

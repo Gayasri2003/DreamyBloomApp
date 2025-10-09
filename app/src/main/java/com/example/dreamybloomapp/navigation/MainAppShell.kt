@@ -45,7 +45,7 @@ fun MainAppShell(rootNavController: NavController) {
             startDestination = BottomNavItem.Home.route,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(BottomNavItem.Home.route) { HomeScreen() }
+            composable(BottomNavItem.Home.route) { HomeScreen(navController = bottomNavController) }
             composable(BottomNavItem.Products.route) { ProductScreen() }
             composable(BottomNavItem.Cart.route) { CartScreen() }
             composable(BottomNavItem.Profile.route) { ProfileScreen() }
