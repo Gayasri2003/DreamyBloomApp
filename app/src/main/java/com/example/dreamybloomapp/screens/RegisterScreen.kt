@@ -36,7 +36,7 @@ fun RegisterScreen(navController: NavController) {
                 title = { Text("Create Account") },
                 navigationIcon = {
                     IconButton(
-                        // --- FIX 1: Navigate to Splash screen ---
+
                         onClick = {
                             navController.navigate(ScreenRoutes.Splash.route) {
                                 // Clear back stack to start new flow

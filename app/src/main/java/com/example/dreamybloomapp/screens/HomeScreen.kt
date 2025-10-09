@@ -28,46 +28,53 @@ import com.example.dreamybloomapp.navigation.ScreenRoutes
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.dreamybloomapp.ui.theme.DreamyBloomAppTheme
-
-// --- FIX: Import Data Models and Lists from DataModels.kt ---
 import com.example.dreamybloomapp.Product
 import com.example.dreamybloomapp.SkinType
 import com.example.dreamybloomapp.newArrivals
 import com.example.dreamybloomapp.offers
 import com.example.dreamybloomapp.skinTypes
 import com.example.dreamybloomapp.mostPurchased
-// -------------------------------------------------------------
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController) {
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text(text = "Dreamy Bloom", fontWeight = FontWeight.Bold) },
-                actions = {
-                    IconButton(onClick = { /* Search Action */ }) { Icon(Icons.Filled.Search, contentDescription = "Search") }
-                    IconButton(onClick = { /* Notifications Action */ }) { Icon(Icons.Filled.Notifications, contentDescription = "Notifications") }
-                }
-            )
-        }
-    ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .safeDrawingPadding()
-                .padding(paddingValues)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(bottom = 60.dp), // Padding for the fixed bottom nav bar
+                .padding(horizontal = 16.dp)
+                .background(MaterialTheme.colorScheme.background),
+            contentPadding = PaddingValues(top = 16.dp, bottom = 60.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            item {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "Dreamy Bloom",
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Row {
+                    IconButton(onClick = { /* Search Action */ }) {
+                        Icon(Icons.Filled.Search, contentDescription = "Search", tint = MaterialTheme.colorScheme.onBackground)
+                    }
+                    IconButton(onClick = { /* Notifications Action */ }) {
+                        Icon(Icons.Filled.Notifications, contentDescription = "Notifications", tint = MaterialTheme.colorScheme.onBackground)
+                    }
+                }
+            }
+        }
             // 1. Banner Section
             item {
                 HomeBanner(
                     title = "Enhance Your \nNatural Beauty...",
-
                     subtitle = "Shop Now",
-                    imageRes = R.drawable.home_banner_img1_placeholder
+                    imageRes = R.drawable.home_banner_img1_placeholder,
+                    navController = navController
                 )
             }
 
@@ -134,25 +141,22 @@ fun HomeScreen(navController: NavController) {
                     products = mostPurchased.take(6),
                     navController = navController
                 )
-            }
 
-            item {
-                Spacer(modifier = Modifier.height(64.dp))
             }
         }
     }
-}
+
 
 // --- Composable Components ---
 
 @Composable
-fun HomeBanner(title: String, subtitle: String, imageRes: Int) {
+fun HomeBanner(title: String, subtitle: String, imageRes: Int, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
+            .height(200.dp)
             .padding(horizontal = 16.dp, vertical = 8.dp),
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(10.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
@@ -174,7 +178,7 @@ fun HomeBanner(title: String, subtitle: String, imageRes: Int) {
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
                 Button(
-                    onClick = { /* Shop Now Action */ },
+                    onClick = { navController.navigate(ScreenRoutes.Product.route)},
                     shape = RoundedCornerShape(8.dp),
                     contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)

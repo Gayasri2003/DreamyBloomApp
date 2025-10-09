@@ -32,18 +32,14 @@ fun MainAppShell(rootNavController: NavController) {
 
 
     Scaffold(
-        topBar = {
-            TopAppBar(title = {
-                Text(text = currentTitle) // Use the dynamic title
-            })
-        },
+
         bottomBar = { BottomNavigationBar(bottomNavController, navItems) }
     ) { paddingValues ->
         // This NavHost manages the content for the 4 tabs inside the Scaffold
         NavHost(
             navController = bottomNavController,
             startDestination = BottomNavItem.Home.route,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
         ) {
             composable(BottomNavItem.Home.route) { HomeScreen(navController = bottomNavController) }
             composable(BottomNavItem.Products.route) { ProductScreen(navController = bottomNavController) }
