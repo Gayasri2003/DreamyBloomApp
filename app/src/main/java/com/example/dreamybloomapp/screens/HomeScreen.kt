@@ -55,6 +55,7 @@ fun HomeScreen(navController: NavController) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .safeDrawingPadding()
                 .padding(paddingValues)
                 .background(MaterialTheme.colorScheme.background)
                 .padding(bottom = 60.dp), // Padding for the fixed bottom nav bar
@@ -63,7 +64,8 @@ fun HomeScreen(navController: NavController) {
             // 1. Banner Section
             item {
                 HomeBanner(
-                    title = "Enhance Your Natural\nBeauty",
+                    title = "Enhance Your \nNatural Beauty...",
+
                     subtitle = "Shop Now",
                     imageRes = R.drawable.home_banner_img1_placeholder
                 )

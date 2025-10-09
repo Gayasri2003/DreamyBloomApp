@@ -46,9 +46,9 @@ fun MainAppShell(rootNavController: NavController) {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(BottomNavItem.Home.route) { HomeScreen(navController = bottomNavController) }
-            composable(BottomNavItem.Products.route) { ProductScreen() }
-            composable(BottomNavItem.Cart.route) { CartScreen() }
-            composable(BottomNavItem.Profile.route) { ProfileScreen() }
+            composable(BottomNavItem.Products.route) { ProductScreen(navController = bottomNavController) }
+            composable(BottomNavItem.Cart.route) { CartScreen(navController = bottomNavController) }
+            composable(BottomNavItem.Profile.route) { ProfileScreen(navController = bottomNavController) }
         }
     }
 }
