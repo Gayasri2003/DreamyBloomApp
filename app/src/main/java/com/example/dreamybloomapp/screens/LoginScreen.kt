@@ -2,16 +2,16 @@ package com.example.dreamybloomapp.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border // Required for the border modifier
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape // Required for CircleShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip // Required for clip modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,10 +39,10 @@ fun LoginScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // --- Logo (Simple Circular Image with Border) ---
+        // --- Logo ---
         Box(
             modifier = Modifier
-                .size(130.dp) // Fixed size for the circular container
+                .size(130.dp)
                 .padding(bottom = 7.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -52,13 +52,13 @@ fun LoginScreen(navController: NavController) {
             Image(
                 painter = painterResource(id = R.drawable.dreamy_bloom_logo),
                 contentDescription = "Dreamy Bloom Logo",
-                contentScale = ContentScale.Fit, // Fits the image within the bounds
+                contentScale = ContentScale.Fit,
                 modifier = Modifier
-                    .fillMaxSize() // Image fills the Box
+                    .fillMaxSize()
 
             )
         }
-        // -------------------------------------------------------------
+
 
         Text(
             text = "WELCOME BACK",
@@ -87,7 +87,7 @@ fun LoginScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        // --- 3. Login Button (Navigates to Home Page) ---
+        // --- 3. Login Button ---
         Button(
             onClick = { navController.navigate(ScreenRoutes.Home.route) },
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
@@ -102,7 +102,7 @@ fun LoginScreen(navController: NavController) {
             )
         }
 
-        // --- Register Link (Navigates to Register Page) ---
+        // --- Register Link  ---
         TextButton(
             onClick = { navController.navigate(ScreenRoutes.Register.route) },
             modifier = Modifier.padding(top = 8.dp)

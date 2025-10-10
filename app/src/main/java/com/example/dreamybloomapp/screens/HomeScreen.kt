@@ -148,7 +148,6 @@ fun HomeScreen(navController: NavController) {
     }
 
 
-// --- Composable Components ---
 
 @Composable
 fun HomeBanner(title: String, subtitle: String, imageRes: Int, navController: NavController) {
@@ -245,7 +244,7 @@ fun ProductCard(product: Product, navController: NavController, modifier: Modifi
             modifier = Modifier
                 .fillMaxSize()
                 .clickable {
-                    // MASTER / DETAIL IMPLEMENTATION
+                    //  DETAIL IMPLEMENTATION
                     navController.navigate(ScreenRoutes.ProductDetail.route.replace("{productId}", product.id.toString()))
                 }
                 .padding(8.dp),

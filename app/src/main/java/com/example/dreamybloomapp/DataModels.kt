@@ -1,13 +1,13 @@
 package com.example.dreamybloomapp
 
 import com.example.dreamybloomapp.R
-import androidx.compose.runtime.Composable // Used for accessing R.drawable
+import androidx.compose.runtime.Composable
 
 // --- DATA MODELS  ---
 data class Product(val id: Int, val name: String, val price: String, val imageRes: Int, val category: String = "General", val description: String)
 data class SkinType(val id: Int, val name: String, val imageRes: Int)
 
-// --- SHARED DUMMY DATA LISTS (DEFINED ONCE) ---
+// ---  DUMMY DATA LISTS ---
 
 val defaultDesc = "Experience the natural glow, long-lasting wear, and flawless coverage for your skin."
 // Data for Home Screen

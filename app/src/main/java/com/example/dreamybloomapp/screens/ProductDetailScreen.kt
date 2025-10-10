@@ -50,7 +50,7 @@ fun ProductDetailScreen(navController: NavController, productId: Int) {
     // Attempt to find the product
     val product: Product = getProductById(productId) ?: FallbackProduct
 
-    // If product is null, show an error message and exit
+    // If product is null
     if (productId == 0) {
         Scaffold(
             topBar = { DetailTopBar(navController = navController, title = "Product Not Found") }
@@ -68,7 +68,6 @@ fun ProductDetailScreen(navController: NavController, productId: Int) {
         bottomBar = { DetailBottomBar(product = product) }
     ) { paddingValues ->
         LazyColumn(
-            // Use .padding(paddingValues) to account for the TopAppBar and BottomBar
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
@@ -98,7 +97,6 @@ fun ProductDetailScreen(navController: NavController, productId: Int) {
     }
 }
 
-// --- Detail Sub-Components ---
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,7 +104,7 @@ fun DetailTopBar(navController: NavController, title: String) {
     TopAppBar(
         title = { Text(title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
         navigationIcon = {
-            // Navigation: Pop back to the previous screen (Product list)
+            // Navigation: Pop back to the previous screen
             IconButton(onClick = { navController.popBackStack() }) {
                 Icon(Icons.Filled.ArrowBack, contentDescription = "Go Back")
             }
@@ -228,8 +226,6 @@ fun DetailBottomBar(product: Product) {
 @Preview(showBackground = true, name = "Product Detail View")
 @Composable
 private fun ProductDetailScreenPreview() {
-    // Provide a mock NavController and a hardcoded valid ID (e.g., 101)
-    // The ID 101 corresponds to "Acne Face Wash" in your productData map.
     DreamyBloomAppTheme {
         ProductDetailScreen(navController = rememberNavController(), productId = 101)
     }

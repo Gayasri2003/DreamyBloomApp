@@ -50,10 +50,10 @@ fun ProductScreen(navController: NavController) {
 
     ) {
         item {
-            // Top Bar (Search/Back)
+            // Top Bar
             ProductTopBar(searchQuery = searchQuery, onSearchChange = { searchQuery = it }, navController = navController)
 
-            // Sort Selector (Simplified)
+            // Sort Selector
             Text(
                 text = "Sort by: Featured",
                 style = MaterialTheme.typography.bodyMedium,
@@ -77,7 +77,6 @@ fun ProductScreen(navController: NavController) {
     }
 }
 
-// --- Custom Components ---
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,7 +87,7 @@ fun ProductTopBar(searchQuery: String, onSearchChange: (String) -> Unit, navCont
             .padding(top = 10.dp, bottom = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Back Arrow Navigation to previous screen (Home)
+        // Back Arrow Navigation
         IconButton(onClick = { navController.popBackStack() }) {
             Icon(Icons.Filled.ArrowBack, contentDescription = "Back to Home", tint = MaterialTheme.colorScheme.onBackground)
         }
@@ -126,7 +125,7 @@ fun ProductResponsiveGrid(products: List<Product>, navController: NavController)
     val configuration = LocalConfiguration.current
     val screenWidthDp = configuration.screenWidthDp.dp
 
-    // RESPONSIVENESS LOGIC: 2 columns for Portrait, 3 for Landscape (Assignment Requirement)
+    // RESPONSIVENESS LOGIC
     val columnCount = when {
         screenWidthDp >= 600.dp -> 3
         else -> 2

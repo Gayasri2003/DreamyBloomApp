@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavType // Required for argument type
-import androidx.navigation.navArgument // Required for defining arguments
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.example.dreamybloomapp.screens.*
 
 
@@ -35,9 +35,8 @@ fun AppNavigation() {
             MainAppShell(rootNavController = navController)
         }
 
-        // --- MASTER/DETAIL: Define the Product Detail Route ---
+        // --- Define the Product Detail Route ---
         composable(
-            // The route template expects an integer ID (e.g., "product_detail/12")
             route = ScreenRoutes.ProductDetail.route,
             arguments = listOf(
                 navArgument("productId") {
@@ -46,7 +45,6 @@ fun AppNavigation() {
                 }
             )
         ) { backStackEntry ->
-            // Instantiate the Detail Screen, extracting the ID from the arguments
             ProductDetailScreen(
                 navController = navController,
                 productId = backStackEntry.arguments?.getInt("productId") ?: 0

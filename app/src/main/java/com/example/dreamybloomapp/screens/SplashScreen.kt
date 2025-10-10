@@ -28,18 +28,17 @@ import kotlinx.coroutines.delay
 fun SplashScreen(navController: NavController) {
     val scale = remember { Animatable(0f) }
 
-    // 2. Animation and AUTO-NAVIGATION Logic
+    // 2. Animation
     LaunchedEffect(key1 = true) {
         scale.animateTo(
             targetValue = 1f,
             animationSpec = tween(durationMillis = 800)
         )
-        delay(1200L) // Hold time after animation finishes (2000ms total)
+        delay(1200L) // Hold time after animation
 
 
-        // --- FIX: Navigate to Login and clear the back stack ---
+        // --- Navigate to Login ---
         navController.navigate(ScreenRoutes.Login.route) {
-            // This flag ensures the SplashScreen is removed from the stack after navigation.
             popUpTo(ScreenRoutes.Splash.route) {
                 inclusive = true
             }

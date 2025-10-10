@@ -25,7 +25,7 @@ fun MainAppShell(rootNavController: NavController) {
         BottomNavItem.Profile,
     )
 
-    // Helper function to dynamically get the title for the TopAppBar
+    // Helper function
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
     val currentTitle = navItems.find { it.route == currentRoute }?.label ?: "Dreamy Bloom"
@@ -35,7 +35,6 @@ fun MainAppShell(rootNavController: NavController) {
 
         bottomBar = { BottomNavigationBar(bottomNavController, navItems) }
     ) { paddingValues ->
-        // This NavHost manages the content for the 4 tabs inside the Scaffold
         NavHost(
             navController = bottomNavController,
             startDestination = BottomNavItem.Home.route,
@@ -66,13 +65,12 @@ fun BottomNavigationBar(navController: NavHostController, items: List<BottomNavI
                 onClick = {
                     if (currentRoute != item.route) {
                         navController.navigate(item.route) {
-                            // Avoid building up a large stack of destinations
                             popUpTo(navController.graph.startDestinationId) {
                                 saveState = true
                             }
-                            // Avoid multiple copies of the same destination when re-selecting
+                            // Avoid multiple copies
                             launchSingleTop = true
-                            // Restore state when re-selecting a previously selected item
+                            // Restore state
                             restoreState = true
                         }
                     }

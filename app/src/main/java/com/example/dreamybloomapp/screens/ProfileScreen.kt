@@ -47,7 +47,6 @@ val profileMenuItems = listOf(
 @Composable
 fun ProfileScreen(navController: NavController) {
     LazyColumn(
-        // Ensure content scrolls and has correct padding above the fixed bottom bar
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
@@ -72,13 +71,11 @@ fun ProfileScreen(navController: NavController) {
                 }
             }
 
-            // --- 3. Logout Button (If required, not in mockup, but essential for navigation flow) ---
-            // Removed for strict mockup compliance. You can add it back if needed.
         }
     }
 }
 
-// --- Component Composables ---
+
 
 @Composable
 fun ProfileTopBar(navController: NavController, title: String) {
@@ -106,7 +103,6 @@ fun ProfileTopBar(navController: NavController, title: String) {
 @Composable
 fun ProfilePictureAndStatus() {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        // Profile Picture with Circles (Mimicking the mockup's circular layering)
         Box(
             modifier = Modifier
                 .size(130.dp)
@@ -121,7 +117,7 @@ fun ProfilePictureAndStatus() {
                 modifier = Modifier
                     .size(120.dp)
                     .clip(CircleShape)
-                    .border(2.dp, MaterialTheme.colorScheme.surface, CircleShape) // Inner white border effect
+                    .border(2.dp, MaterialTheme.colorScheme.surface, CircleShape)
             )
         }
 
@@ -134,11 +130,11 @@ fun ProfilePictureAndStatus() {
             color = MaterialTheme.colorScheme.onBackground
         )
 
-        // Active Status (Mimicking the small dot/text)
+        // Active Status
         Text(
             text = "● Active status",
             style = MaterialTheme.typography.labelMedium,
-            color = Color(0xFF4CAF50), // Standard green color for active status
+            color = Color(0xFF4CAF50),
             modifier = Modifier.padding(top = 4.dp)
         )
     }

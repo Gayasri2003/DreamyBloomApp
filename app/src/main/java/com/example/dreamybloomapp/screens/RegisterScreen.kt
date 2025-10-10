@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.dreamybloomapp.ui.theme.DreamyBloomAppTheme
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll // Needed for responsiveness
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,7 +59,7 @@ fun RegisterScreen(navController: NavController) {
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.surface)
                 .padding(horizontal = 32.dp)
-                .verticalScroll(scrollState), // Added scroll for responsiveness
+                .verticalScroll(scrollState),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -93,7 +93,7 @@ fun RegisterScreen(navController: NavController) {
                 value = password,
                 onValueChange = { password = it },
                 label = { Text("Password") },
-                visualTransformation = PasswordVisualTransformation(), // Masks input
+                visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)
             )
 
@@ -119,7 +119,6 @@ fun RegisterScreen(navController: NavController) {
 
             // Register Button
             Button(
-                // --- FIX 2: Navigate to Login screen after registration ---
                 onClick = { navController.navigate(ScreenRoutes.Login.route) },
                 enabled = agreedToTerms,
                 modifier = Modifier.fillMaxWidth().height(56.dp)
@@ -130,7 +129,6 @@ fun RegisterScreen(navController: NavController) {
     }
 }
 
-// Preview remains the same
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable

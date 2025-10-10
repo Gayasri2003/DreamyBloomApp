@@ -87,7 +87,7 @@ fun CartScreen(navController: NavController) {
     val shipping = 300.00
     val total = subtotal - discount + shipping
 
-    // LazyColumn enables scrolling content under the fixed bottom bar
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -111,7 +111,7 @@ fun CartScreen(navController: NavController) {
                     Icon(Icons.Filled.ArrowBack, contentDescription = "Back to Home", tint = MaterialTheme.colorScheme.onBackground)
                 }
 
-                // Cart Title (Pushed down by the Row's padding)
+                // Cart Title
                 Text(
                     text = "Cart",
                     style = MaterialTheme.typography.headlineMedium,
@@ -167,7 +167,6 @@ fun CartScreen(navController: NavController) {
     }
 }
 
-// --- Component Composables ---
 
 @Composable
 fun AddressCard(title: String, address: String, onEditClick: () -> Unit) {
@@ -262,7 +261,7 @@ fun QuantityButton(icon: ImageVector, onClick: () -> Unit) {
     IconButton(
         onClick = onClick,
         modifier = Modifier.size(32.dp),
-        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer) // Use secondary for pink buttons
+        colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
     }
@@ -311,9 +310,7 @@ fun SummaryRow(label: String, value: String, color: androidx.compose.ui.graphics
 @Preview(showBackground = true)
 @Composable
 private fun CartScreenPreview() {
-    // Wrap the screen in your custom theme for correct colors and typography
     DreamyBloomAppTheme {
-        // Provide a mock NavController since the preview doesn't run real navigation
         CartScreen(navController = rememberNavController())
     }
 }

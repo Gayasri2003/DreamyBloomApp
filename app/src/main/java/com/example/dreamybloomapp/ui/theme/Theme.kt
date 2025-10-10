@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-// Define the Light Color Scheme using the standard Light colors
+//  Light colors
 private val LightColorScheme = lightColorScheme(
     primary = primaryLight,
     onPrimary = onPrimaryLight,
@@ -44,7 +44,7 @@ private val LightColorScheme = lightColorScheme(
 
 )
 
-// Define the Dark Color Scheme using the standard Dark colors
+// Dark colors
 private val DarkColorScheme = darkColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
@@ -76,14 +76,10 @@ private val DarkColorScheme = darkColorScheme(
     inversePrimary = inversePrimaryDark,
     )
 
-/**
- * The main theme composable for the DreamyBloomApp.
- * This handles the automatic switching between Light and Dark mode based on the device setting (Req 3).
- */
+
 @Composable
 fun DreamyBloomAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(), // This handles the device setting
-    // Dynamic color is not included by default for custom themes.
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -91,20 +87,18 @@ fun DreamyBloomAppTheme(
         else -> LightColorScheme
     }
 
-    // This block handles setting the system status bar color to match the app's surface color
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.surface.toArgb()
-            // Set status bar icons to be light or dark based on the surface background color
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography, // Assumes Typography is defined in Type.kt
+        typography = Typography,
         content = content
     )
 }

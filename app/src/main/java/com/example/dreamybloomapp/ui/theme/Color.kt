@@ -39,7 +39,7 @@ val surfaceContainerLight = Color(0xFFF8EAF0)
 val surfaceContainerHighLight = Color(0xFFF2E5EA)
 val surfaceContainerHighestLight = Color(0xFFECDFE5)
 
-// Dark colors - These are the standard colors used by the darkColorScheme
+// Dark colors
 val primaryDark = Color(0xFFF5B2E1)
 val onPrimaryDark = Color(0xFF4E1E44)
 val primaryContainerDark = Color(0xFF68355C)
@@ -76,7 +76,3 @@ val surfaceContainerDark = Color(0xFF241E22)
 val surfaceContainerHighDark = Color(0xFF2F282C)
 val surfaceContainerHighestDark = Color(0xFF3A3337)
 
-// NOTE: We are intentionally excluding the Medium and High contrast colors
-// (e.g., *MediumContrast and *HighContrast) from this file's code block for
-// clarity, as they are not used in the standard DarkColorScheme in Theme.kt.
-// However, if you included them in your local file, it's fine.
